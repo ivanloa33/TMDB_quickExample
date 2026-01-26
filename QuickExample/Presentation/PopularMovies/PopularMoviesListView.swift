@@ -19,7 +19,7 @@ enum Constants {
 struct PopularMoviesListView: View {
     @StateObject var popularMoviesListViewModel = PopularMoviesListViewModel(fetchPopularMoviesUseCase: FetchPopularMoviesUseCaseImpl(repository: MoviesRepositoryImpl()))
     
-    let imageLoader = ImageLoader()
+    let imageLoader: ImageLoading = TMDBImageLoader()
     
     var body: some View {
         NavigationView {
@@ -34,7 +34,6 @@ struct PopularMoviesListView: View {
                     }
                 }
             }
-            .padding()
             .task {
                 await popularMoviesListViewModel.fetchPopularMovies()
             }
@@ -43,26 +42,7 @@ struct PopularMoviesListView: View {
     }
 }
 
-actor ImageLoader {
-    private var cache: [URL: UIImage] = [:]
-    
-    func loadImage(from url: URL) async throws -> UIImage {
-        if let cached = cache[url]  {
-            return cached
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(await Constants.Secrets.tmdbApiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
-        let image = UIImage(data: data)!
-        
-        cache[url] = image
-        return image
-    }
-}
+
 
 #Preview {
     PopularMoviesListView()

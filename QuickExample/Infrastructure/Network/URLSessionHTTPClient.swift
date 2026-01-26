@@ -26,13 +26,4 @@ final class URLSessionHTTPClient: HTTPClient {
             throw error
         }
     }
-    
-    func getImage(url: URL) async throws -> Data {
-        let request = createURLRequest(with: url)
-        do {
-            return try await URLSession.shared.data(for: request).0
-        } catch {
-            throw error
-        }
-    }
 }

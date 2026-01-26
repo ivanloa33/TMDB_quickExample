@@ -22,11 +22,4 @@ final class MoviesRepositoryImpl: MoviesRepository {
         let responseMovieDTO: ResponseMovieDTO = try await httpClient.get(url: url)
         return responseMovieDTO.results.map { $0.toMovie() }
     }
-    
-    func fetchPosterImage(from posterPath: String) async throws -> Data {
-        guard let url = URL(string: "\(Constants.Image.baseUrl)\(posterPath)") else {
-            throw NSError(domain: "Invalid URL for image path \(posterPath)", code: 0)
-        }
-        return try await httpClient.getImage(url: url)
-    }
 }

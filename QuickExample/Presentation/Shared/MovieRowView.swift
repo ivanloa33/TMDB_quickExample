@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovieRowView: View {
     let movie: Movie
-    let imageLoader: ImageLoader
+    let imageLoader: ImageLoading
     
     var body: some View {
         HStack {

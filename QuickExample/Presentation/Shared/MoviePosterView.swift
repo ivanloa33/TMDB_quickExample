@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoviePosterView: View {
     let posterPath: String
-    let imageLoader: ImageLoader
+    let imageLoader: ImageLoading
     
     @State var image: UIImage?
     

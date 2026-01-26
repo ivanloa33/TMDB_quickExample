@@ -9,5 +9,4 @@ import Foundation
 
 protocol MoviesRepository {
     func fetchPopularMovies() async throws -> [Movie]
-    func fetchPosterImage(from posterPath: String) async throws -> Data
 }
