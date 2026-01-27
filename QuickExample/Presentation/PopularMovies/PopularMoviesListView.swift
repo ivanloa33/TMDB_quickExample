@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-enum Constants {
-    enum Secrets {
-        static let tmdbApiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWYwNjEzOTU2ZjRlYjQxMjBmYTY2NjcwZDg2MTdhMiIsIm5iZiI6MTY2NjYzNTU1OC43MzYsInN1YiI6IjYzNTZkNzI2NTZiOWY3MDA3ZTJmZGE5NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4ukJ2nIYGcwdc4OvdfjZKaGaxNlIGzooFzZMQcvX4o8"
-    }
-    enum Image {
-        static let baseUrl = "https://image.tmdb.org/t/p/w500"
-    }
-}
-
 struct PopularMoviesListView: View {
     @StateObject var popularMoviesListViewModel = PopularMoviesListViewModel(fetchPopularMoviesUseCase: FetchPopularMoviesUseCaseImpl(repository: MoviesRepositoryImpl()))
     
@@ -41,8 +32,6 @@ struct PopularMoviesListView: View {
         }
     }
 }
-
-
 
 #Preview {
     PopularMoviesListView()

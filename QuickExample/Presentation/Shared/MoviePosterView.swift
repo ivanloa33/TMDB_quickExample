@@ -26,12 +26,12 @@ struct MoviePosterView: View {
         .frame(width: 120, height: 180)
         .clipped()
         .task(id: posterPath) {
-            await loadImage()
+            //await loadImage()
         }
     }
     
     private func loadImage() async {
-        let url = URL(string: "\(Constants.Image.baseUrl)\(posterPath)")!
-        image = try? await imageLoader.loadImage(from: url)
+        //let url = URL(string: "\(Constants.Image.baseUrl)\(posterPath)")!
+        //image = try? await imageLoader.loadImage(from: url)
     }
 }

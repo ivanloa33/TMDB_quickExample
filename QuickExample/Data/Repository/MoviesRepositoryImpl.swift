@@ -16,10 +16,7 @@ final class MoviesRepositoryImpl: MoviesRepository {
     }
     
     func fetchPopularMovies() async throws -> [Movie] {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular") else {
-            return []
-        }
-        let responseMovieDTO: ResponseMovieDTO = try await httpClient.get(url: url)
+        let responseMovieDTO: ResponseMovieDTO = try await httpClient.get(endPoint: TMDBEndPoint.popular)
         return responseMovieDTO.results.map { $0.toMovie() }
     }
 }

@@ -13,7 +13,7 @@ struct MovieRowView: View {
     
     var body: some View {
         HStack {
-            MoviePosterView(posterPath: movie.posterPath, imageLoader: imageLoader)
+            //MoviePosterView(posterPath: movie.posterPath, imageLoader: imageLoader)
             Text(movie.title)
         }
     }
