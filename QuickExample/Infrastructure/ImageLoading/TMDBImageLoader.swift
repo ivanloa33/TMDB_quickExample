@@ -8,14 +8,14 @@
 import UIKit
 
 protocol ImageLoading {
-    func loadImage(from url: URL) async throws -> UIImage
+    func loadImage(from posterPath: String) async throws -> UIImage
 }
 
 actor TMDBImageLoader: ImageLoading {
     private var cache: [URL: UIImage] = [:]
     
-    func loadImage(from url: URL) async throws -> UIImage {
-        if let cached = cache[url]  {
+    func loadImage(from posterPath: String) async throws -> UIImage {
+      /*  if let cached = cache[posterPath]  {
             return cached
         }
         
@@ -27,7 +27,8 @@ actor TMDBImageLoader: ImageLoading {
         let (data, _) = try await URLSession.shared.data(for: request)
         let image = UIImage(data: data)!
         
-        cache[url] = image
-        return image
+        cache[posterPath] = image
+        return image*/
+        UIImage()
     }
 }

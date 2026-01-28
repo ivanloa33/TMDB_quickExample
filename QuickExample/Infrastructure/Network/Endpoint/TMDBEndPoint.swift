@@ -10,11 +10,14 @@ import Foundation
 enum TMDBEndPoint: EndPoint {
     
     case popular
+    case imagePosterPath(String)
     
     var path: String {
         switch self {
         case .popular:
             return "movie/popular"
+        case .imagePosterPath(let path):
+            return path
         }
     }
     
@@ -28,7 +31,15 @@ enum TMDBEndPoint: EndPoint {
     }
     
     var urlRequest: URLRequest {
-        var urlrequest = URLRequest(url: URL(string: "\(APIConfig.baseUrl)/\(path)")!)
+        var baseURL: String
+        switch self {
+        case .imagePosterPath:
+            baseURL = "\(APIConfig.imageBaseUrl)/"
+        default:
+            baseURL = "\(APIConfig.baseUrl)/"
+        }
+        
+        var urlrequest = URLRequest(url: URL(string: "\(baseURL)\(path)")!)
         urlrequest.httpMethod = method
         urlrequest.allHTTPHeaderFields = headers
         

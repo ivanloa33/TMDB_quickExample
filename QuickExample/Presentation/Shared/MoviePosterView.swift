@@ -26,7 +26,7 @@ struct MoviePosterView: View {
         .frame(width: 120, height: 180)
         .clipped()
         .task(id: posterPath) {
-            //await loadImage()
+            await loadImage()
         }
     }
     
