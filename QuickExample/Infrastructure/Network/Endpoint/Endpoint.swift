@@ -7,9 +7,8 @@
 
 import Foundation
 
-protocol EndPoint {
+protocol Endpoint {
     var path: String { get }
     var method: String { get }
-    var headers: [String: String] { get }
-    var urlRequest: URLRequest { get }
+    var queryItems: [URLQueryItem] { get }
 }

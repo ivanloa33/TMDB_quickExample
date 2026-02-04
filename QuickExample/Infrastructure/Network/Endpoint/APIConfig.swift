@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIConfig {
-    static let baseUrl = "https://api.themoviedb.org/3"
-    static let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+extension URL {
+    static let baseUrl = URL(string: "https://api.themoviedb.org/3")!
+    static let imageBaseUrl = URL(string: "https://image.tmdb.org/t/p")!
 }

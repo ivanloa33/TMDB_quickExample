@@ -8,10 +8,15 @@
 import Foundation
 
 final class URLSessionHTTPClient: HTTPClient {
-    
-    func get<T: Decodable>(endPoint: EndPoint) async throws -> T {
+    let commonHeaders: [String: String] = {
+        ["Authorization": "Bearer \(Secrets.tmdbApiKey)",
+         "Accept": "application/json"]
+    }()
+
+    func get<T: Decodable>(endPoint: Endpoint) async throws -> T {
         do {
-            let (data, _) = try await URLSession.shared.data(for: endPoint.urlRequest)
+            let request = try URLRequestBuilder.makeRequest(baseURL: .baseUrl, endpoint: endPoint, headers: commonHeaders)
+            let (data, _) = try await URLSession.shared.data(for: request)
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
             throw error

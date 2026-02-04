@@ -7,28 +7,35 @@
 
 import UIKit
 
+enum ImageLoadingError: Error {
+    case invalidImageData
+}
+
 protocol ImageLoading {
     func loadImage(from posterPath: String) async throws -> UIImage
 }
 
 actor TMDBImageLoader: ImageLoading {
-    private var cache: [URL: UIImage] = [:]
+    private let commonHeaders = ["Authorization": "Bearer \(Secrets.tmdbApiKey)"]
+    
+    private var cache: [String: UIImage] = [:]
     
     func loadImage(from posterPath: String) async throws -> UIImage {
-      /*  if let cached = cache[posterPath]  {
+        if let cached = cache[posterPath]  {
             return cached
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        //request.setValue("Bearer \(await Constants.Secrets.tmdbApiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
+        let request = try await ImageRequestBuilder.makeRequest(
+            baseURL: .imageBaseUrl,
+            endpoint: .poster(path: posterPath, size: .w500),
+            headers: commonHeaders
+        )
         let (data, _) = try await URLSession.shared.data(for: request)
-        let image = UIImage(data: data)!
+        guard let image = UIImage(data: data) else {
+            throw ImageLoadingError.invalidImageData
+        }
         
         cache[posterPath] = image
-        return image*/
-        UIImage()
+        return image
     }
 }

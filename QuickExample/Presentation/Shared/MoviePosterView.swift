@@ -31,7 +31,6 @@ struct MoviePosterView: View {
     }
     
     private func loadImage() async {
-        //let url = URL(string: "\(Constants.Image.baseUrl)\(posterPath)")!
-        //image = try? await imageLoader.loadImage(from: url)
+        image = try? await imageLoader.loadImage(from: posterPath)
     }
 }
