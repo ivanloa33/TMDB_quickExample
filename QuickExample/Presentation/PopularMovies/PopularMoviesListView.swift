@@ -10,7 +10,7 @@ import SwiftUI
 struct PopularMoviesListView: View {
     @StateObject var popularMoviesListViewModel = PopularMoviesListViewModel(fetchPopularMoviesUseCase: FetchPopularMoviesUseCaseImpl(repository: MoviesRepositoryImpl()))
     
-    let imageLoader: ImageLoading = TMDBImageLoader()
+    private let imageLoader: ImageLoading = DefaultImageLoader()
     
     var body: some View {
         NavigationView {
