@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+// handle states with loading, loaded, and failed with a default Image 
 struct MoviePosterView: View {
     let posterPath: String
     let imageLoader: ImageLoading
     
-    @State var image: UIImage?
+    @State private var image: UIImage?
     
     var body: some View {
         Group {

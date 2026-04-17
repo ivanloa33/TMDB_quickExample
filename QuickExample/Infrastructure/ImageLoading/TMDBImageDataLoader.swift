@@ -7,15 +7,6 @@
 
 import UIKit
 
-enum ImageLoadingError: Error {
-    case noData
-    case invalidData
-}
-
-protocol ImageDataLoading {
-    func loadImage(from posterPath: String) async throws -> Data
-}
-
 actor TMDBImageDataLoader: ImageDataLoading {
     private let commonHeaders = ["Authorization": "Bearer \(Secrets.tmdbApiKey)"]
     

@@ -8,28 +8,27 @@
 import Foundation
 import Combine
 
+@MainActor
 final class PopularMoviesListViewModel: ObservableObject {
+    @Published private(set) var movies: [Movie] = []
+    @Published private(set) var isLoading: Bool = false
+    @Published private(set) var errorMessage: String? = nil
     
-    @Published var movies: [Movie] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
-    private var fetchPopularMoviesUseCase: FetchPopularMoviesUseCase
+    private let fetchPopularMoviesUseCase: FetchPopularMoviesUseCase
     
     init(fetchPopularMoviesUseCase: FetchPopularMoviesUseCase) {
         self.fetchPopularMoviesUseCase = fetchPopularMoviesUseCase
     }
     
-    @MainActor
     func fetchPopularMovies() async {
-        defer {
-            isLoading = false
-        }
-        self.isLoading = true
-        self.errorMessage = nil
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+        
         do {
-            self.movies = try await fetchPopularMoviesUseCase.execute()
+            movies = try await fetchPopularMoviesUseCase.execute()
         } catch {
-            self.errorMessage = "Failed to fetch movies: \(error.localizedDescription)"
+            errorMessage = "Failed to fetch movies: \(error.localizedDescription)"
         }
     }
 }

@@ -8,31 +8,34 @@
 import SwiftUI
 
 struct PopularMoviesListView: View {
-    @StateObject var popularMoviesListViewModel = PopularMoviesListViewModel(fetchPopularMoviesUseCase: FetchPopularMoviesUseCaseImpl(repository: MoviesRepositoryImpl()))
+    @StateObject var viewModel: PopularMoviesListViewModel
+    private let imageLoader: ImageLoading
     
-    private let imageLoader: ImageLoading = DefaultImageLoader()
+    init(
+        viewModel: PopularMoviesListViewModel,
+        imageLoader: ImageLoading
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.imageLoader = imageLoader
+    }
     
     var body: some View {
         NavigationView {
             Group {
-                if popularMoviesListViewModel.isLoading {
+                if viewModel.isLoading {
                     ProgressView("Data is loading ...")
-                } else if let errorMessage = popularMoviesListViewModel.errorMessage {
+                } else if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
                 } else {
-                    List(popularMoviesListViewModel.movies, id: \.id) { movie in
+                    List(viewModel.movies, id: \.id) { movie in
                         MovieRowView(movie: movie, imageLoader: imageLoader)
                     }
                 }
             }
-            .task {
-                await popularMoviesListViewModel.fetchPopularMovies()
-            }
             .navigationTitle("Popular Movies")
+            .task {
+                await viewModel.fetchPopularMovies()
+            }
         }
     }
-}
-
-#Preview {
-    PopularMoviesListView()
 }
