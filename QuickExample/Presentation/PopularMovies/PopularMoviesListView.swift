@@ -33,6 +33,9 @@ struct PopularMoviesListView: View {
                 }
             }
             .navigationTitle("Popular Movies")
+            .refreshable {
+                await viewModel.fetchPopularMovies()
+            }
             .task {
                 await viewModel.fetchPopularMovies()
             }

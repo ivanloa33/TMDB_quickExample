@@ -13,7 +13,7 @@ struct MovieDTO: Decodable {
     let poster_path: String
     let overview: String
     
-    func toMovie() -> Movie {
+    func toDomain() -> Movie {
         Movie(id: id, title: title, posterPath: poster_path, overview: overview)
     }
 }
