@@ -10,38 +10,41 @@ import Foundation
 final class MoviesRepositoryImpl: MoviesRepository {
     
     private let httpClient: HTTPClient
-    private let cache: any Cache<CacheKey, [CacheMovie]> = InMemoryCache()
+    private let cache: any Cache<CacheKey, [CacheMovie]>
     
-    init(httpClient: HTTPClient = URLSessionHTTPClient()) {
+    init(httpClient: HTTPClient,
+         cache: any Cache<CacheKey, [CacheMovie]>) {
         self.httpClient = httpClient
+        self.cache = cache
     }
     
-    func fetchPopularMovies() async throws -> [Movie] {
-        if let movies = await fetchCachePopularMovies() {
-            return movies
+    func fetchMovies(category: MovieCategory) async throws -> [Movie] {
+        let key = cacheKey(category: category)
+        
+        if let cacheMovies = await cache.get(key: key) {
+            return cacheMovies.map { $0.toDomain() }
         }
         
-        let movies = try await fetchRemotePopularMovies()
+        let responseMovieDTO: ResponseMovieDTO = try await httpClient.get(endPoint: endpoint(category: category))
         
-        await saveMoviesToCache(movies: movies)
+        await cache.set(responseMovieDTO.results.map { $0.toCache() }, for: key)
         
-        return movies
-    }
-    
-    private func fetchRemotePopularMovies() async throws -> [Movie] {
-        let responseMovieDTO: ResponseMovieDTO = try await httpClient.get(endPoint: TMDBEndPoint.popular)
         return responseMovieDTO.results.map { $0.toDomain() }
     }
     
-    private func fetchCachePopularMovies() async -> [Movie]? {
-        guard let cacheMovies = await cache.get(key: .popular) else {
-            return nil
+    private func endpoint(category: MovieCategory) -> TMDBEndPoint {
+        switch category {
+        case .popular: return .popular
+        case .upcoming: return .upcoming
+        case .topRated: return .topRated
         }
-        return cacheMovies.map { $0.toDomain() }
     }
     
-    private func saveMoviesToCache(movies: [Movie]) async {
-        let cacheMovies = movies.map { $0.toCache() }
-        await cache.set(cacheMovies, for: .popular)
+    private func cacheKey(category: MovieCategory) -> CacheKey {
+        switch category {
+        case .popular: return .popular
+        case .upcoming: return .upcoming
+        case .topRated: return .topRated
+        }
     }
 }

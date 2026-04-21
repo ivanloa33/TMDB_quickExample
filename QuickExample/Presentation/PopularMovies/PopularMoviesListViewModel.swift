@@ -14,10 +14,10 @@ final class PopularMoviesListViewModel: ObservableObject {
     @Published private(set) var isLoading: Bool = false
     @Published private(set) var errorMessage: String? = nil
     
-    private let fetchPopularMoviesUseCase: FetchPopularMoviesUseCase
+    private let fetchMoviesUseCase: FetchMoviesUseCase
     
-    init(fetchPopularMoviesUseCase: FetchPopularMoviesUseCase) {
-        self.fetchPopularMoviesUseCase = fetchPopularMoviesUseCase
+    init(fetchMoviesUseCase: FetchMoviesUseCase) {
+        self.fetchMoviesUseCase = fetchMoviesUseCase
     }
     
     func fetchPopularMovies() async {
@@ -26,7 +26,7 @@ final class PopularMoviesListViewModel: ObservableObject {
         defer { isLoading = false }
         
         do {
-            movies = try await fetchPopularMoviesUseCase.execute()
+            movies = try await fetchMoviesUseCase.execute(category: .popular)
         } catch {
             errorMessage = "Failed to fetch movies: \(error.localizedDescription)"
         }

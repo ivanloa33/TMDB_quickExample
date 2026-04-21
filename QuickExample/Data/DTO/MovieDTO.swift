@@ -24,6 +24,17 @@ struct MovieDTO: Decodable {
         )
     }
     
+    func toCache() -> CacheMovie {
+        CacheMovie(
+            id: id,
+            title: title,
+            poster_path: poster_path,
+            overview: overview,
+            releaseDate: APIDateFormatter.yyyyMMdd.date(from: releaseDate) ?? Date(),
+            cachedA: Date()
+        )
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id,title, poster_path, overview
         case releaseDate = "release_date"

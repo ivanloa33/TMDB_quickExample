@@ -14,14 +14,19 @@ final class AppContainer {
     private let imageLoader: ImageLoading
     
     init() {
-        self.repository = MoviesRepositoryImpl()
+        let httpClient = URLSessionHTTPClient()
+        let cache: any Cache<CacheKey, [CacheMovie]> = InMemoryCache()
+        self.repository = MoviesRepositoryImpl(
+            httpClient: httpClient,
+            cache: cache
+        )
         self.imageDataLoader = TMDBImageDataLoader()
         self.imageLoader = DefaultImageLoader(dataLoader: imageDataLoader)
     }
     
     func makePopularMoviesListView() -> some View {
-        let useCase = FetchPopularMoviesUseCaseImpl(repository: repository)
-        let viewModel = PopularMoviesListViewModel(fetchPopularMoviesUseCase: useCase)
+        let useCase = FetchMoviesUseCaseImpl(repository: repository)
+        let viewModel = PopularMoviesListViewModel(fetchMoviesUseCase: useCase)
         
         return PopularMoviesListView(
             viewModel: viewModel,
