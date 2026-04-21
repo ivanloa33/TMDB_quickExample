@@ -12,11 +12,17 @@ struct CacheMovie {
     let title: String
     let poster_path: String
     let overview: String
+    let releaseDate: Date
     let cachedA: Date
 }
 
 extension CacheMovie {
     func toDomain() -> Movie {
-        .init(id: id, title: title, posterPath: poster_path, overview: overview)
+        .init(
+            id: id,
+            title: title,
+            posterPath: poster_path,
+            overview: overview,
+            releaseDate: releaseDate)
     }
 }

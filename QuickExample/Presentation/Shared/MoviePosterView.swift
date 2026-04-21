@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// handle states with loading, loaded, and failed with a default Image 
+// TODO: handle states with loading, loaded, and failed with a default Image 
 struct MoviePosterView: View {
     let posterPath: String
     let imageLoader: ImageLoading
