@@ -20,6 +20,7 @@ struct MoviePosterView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
             } else {
                 ProgressView()
             }
