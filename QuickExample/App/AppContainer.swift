@@ -8,25 +8,20 @@
 import SwiftUI
 
 final class AppContainer {
-    
-    private let repository: MoviesRepository
-    private let imageDataLoader: ImageDataLoading
-    private let imageLoader: ImageLoading
-    
-    init() {
-        let httpClient = URLSessionHTTPClient()
-        let cache: any Cache<CacheKey, [CacheMovie]> = InMemoryCache()
-        self.repository = MoviesRepositoryImpl(
-            httpClient: httpClient,
-            cache: cache
-        )
-        self.imageDataLoader = TMDBImageDataLoader()
-        self.imageLoader = DefaultImageLoader(dataLoader: imageDataLoader)
-    }
+    private lazy var httpClient: HTTPClient = URLSessionHTTPClient()
+    private lazy var cache: any Cache<CacheKey, [CacheMovie]> = InMemoryCache()
+    private lazy var repository: MoviesRepository = MoviesRepositoryImpl(
+        httpClient: httpClient,
+        cache: cache
+    )
+    private lazy var imageDataLoader: ImageDataLoading = TMDBImageDataLoader()
+    private lazy var imageLoader: ImageLoading = DefaultImageLoader(dataLoader: imageDataLoader)
+    private lazy var fetchMoviesUseCase: FetchMoviesUseCase = FetchMoviesUseCaseImpl(
+        repository: repository
+    )
     
     func makePopularMoviesListView() -> some View {
-        let useCase = FetchMoviesUseCaseImpl(repository: repository)
-        let viewModel = PopularMoviesListViewModel(fetchMoviesUseCase: useCase)
+        let viewModel = PopularMoviesListViewModel(fetchMoviesUseCase: fetchMoviesUseCase)
         
         return PopularMoviesListView(
             viewModel: viewModel,
@@ -35,10 +30,7 @@ final class AppContainer {
     }
     
     func makeHomeView() -> some View {
-        let repository = MoviesRepositoryImpl(httpClient: URLSessionHTTPClient(),
-                                              cache: InMemoryCache())
-        let useCase = FetchMoviesUseCaseImpl(repository: repository)
-        let viewModel = HomeViewModel(fetchMoviesUseCase: useCase)
+        let viewModel = HomeViewModel(fetchMoviesUseCase: fetchMoviesUseCase)
         
         return HomeView(viewModel: viewModel, imageLoader: imageLoader)
     }
