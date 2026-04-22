@@ -11,12 +11,4 @@ enum MovieCategory: String {
     case popular
     case upcoming
     case topRated
-    
-    var title: String {
-        switch self {
-        case .popular: return "Popular"
-        case .upcoming: return "Upcoming"
-        case .topRated: return "Top Rated"
-        }
-    }
 }
