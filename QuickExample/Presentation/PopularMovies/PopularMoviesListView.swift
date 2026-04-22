@@ -28,7 +28,7 @@ struct PopularMoviesListView: View {
                     Text(errorMessage)
                 } else {
                     List(viewModel.movies, id: \.id) { movie in
-                        MovieRowView(movie: movie, imageLoader: imageLoader)
+                        MovieListRowView(movie: movie, imageLoader: imageLoader)
                     }
                 }
             }

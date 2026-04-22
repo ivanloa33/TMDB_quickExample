@@ -20,7 +20,7 @@ enum TMDBEndPoint: Endpoint {
         case .upcoming:
             return "movie/upcoming"
         case .topRated:
-            return "movie/top-rated"
+            return "movie/top_rated"
         }
     }
     

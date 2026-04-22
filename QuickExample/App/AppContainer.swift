@@ -33,4 +33,13 @@ final class AppContainer {
             imageLoader: imageLoader
         )
     }
+    
+    func makeHomeView() -> some View {
+        let repository = MoviesRepositoryImpl(httpClient: URLSessionHTTPClient(),
+                                              cache: InMemoryCache())
+        let useCase = FetchMoviesUseCaseImpl(repository: repository)
+        let viewModel = HomeViewModel(fetchMoviesUseCase: useCase)
+        
+        return HomeView(viewModel: viewModel, imageLoader: imageLoader)
+    }
 }

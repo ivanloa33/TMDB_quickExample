@@ -1,0 +1,37 @@
+//
+//  MovieCarouselSectionView.swift
+//  QuickExample
+//
+//  Created by Ivan Lopez on 22/04/26.
+//
+
+import SwiftUI
+
+struct MovieCarouselSectionView: View {
+    let imageLoader: ImageLoading
+    let category: MovieCategory
+    let data: [Movie]
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(category.title)
+                .font(.title3.weight(.semibold))
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .top, spacing: 12) {
+                    ForEach(data, id: \.id) { movie in
+                        MovieCarouselRowView(
+                            movie: movie,
+                            imageLoader: DefaultImageLoader(dataLoader: TMDBImageDataLoader())
+                        )
+                        .frame(width: 150)
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
+    }
+}

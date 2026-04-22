@@ -24,8 +24,3 @@ final class FetchMoviesUseCaseImpl: FetchMoviesUseCase {
     }
 }
 
-enum MovieCategory {
-    case popular
-    case upcoming
-    case topRated
-}
