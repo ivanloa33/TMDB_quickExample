@@ -13,7 +13,7 @@ struct QuickExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            container.makeHomeView()
+            RootView(container: container)
         }
     }
 }

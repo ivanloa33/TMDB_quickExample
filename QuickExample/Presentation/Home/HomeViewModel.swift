@@ -28,7 +28,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     func data(category: MovieCategory) -> [Movie] {
-        moviesByCategory[category] ?? []
+        return Array((moviesByCategory[category] ?? []).prefix(5))
     }
     
     private func fetchMovies(category: MovieCategory) async -> [Movie] {

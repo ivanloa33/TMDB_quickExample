@@ -20,10 +20,13 @@ final class AppContainer {
         repository: repository
     )
     
-    func makePopularMoviesListView() -> some View {
-        let viewModel = PopularMoviesListViewModel(fetchMoviesUseCase: fetchMoviesUseCase)
+    func makeMovieListView(_ category: MovieCategory) -> some View {
+        let viewModel = MoviesListViewModel(
+            category: category,
+            fetchMoviesUseCase: fetchMoviesUseCase
+        )
         
-        return PopularMoviesListView(
+        return MoviesListView(
             viewModel: viewModel,
             imageLoader: imageLoader
         )

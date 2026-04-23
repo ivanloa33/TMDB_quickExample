@@ -14,8 +14,14 @@ struct MovieCarouselSectionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(category.title)
-                .font(.title3.weight(.semibold))
+            HStack {
+                Text(category.title)
+                    .font(.title3.weight(.semibold))
+                Spacer()
+                NavigationLink(value: category) {
+                    Text("View All")
+                }
+            }
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 12) {
