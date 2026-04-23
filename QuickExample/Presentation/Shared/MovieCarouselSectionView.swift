@@ -13,7 +13,7 @@ struct MovieCarouselSectionView: View {
     let data: [Movie]
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(category.title)
                     .font(.title3.weight(.semibold))
@@ -24,7 +24,7 @@ struct MovieCarouselSectionView: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .top, spacing: 12) {
+                LazyHStack(alignment: .top, spacing: 8) {
                     ForEach(data, id: \.id) { movie in
                         MovieCarouselRowView(
                             movie: movie,
