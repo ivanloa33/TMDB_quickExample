@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct MoviesListView: View {
-    @StateObject var viewModel: MoviesListViewModel
+    @StateObject private var viewModel: MoviesListViewModel
     private let imageLoader: ImageLoading
+    private let onMovieTap: (Int) -> Void
     
     init(
         viewModel: MoviesListViewModel,
-        imageLoader: ImageLoading
+        imageLoader: ImageLoading,
+        onMovieTap: @escaping (Int) -> Void
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.imageLoader = imageLoader
+        self.onMovieTap = onMovieTap
     }
     
     var body: some View {
@@ -27,7 +30,11 @@ struct MoviesListView: View {
                 Text(errorMessage)
             } else {
                 List(viewModel.movies, id: \.id) { movie in
-                    MovieListRowView(movie: movie, imageLoader: imageLoader)
+                    Button {
+                        onMovieTap(movie.id)
+                    } label: {
+                        MovieListRowView(movie: movie, imageLoader: imageLoader)
+                    }
                 }
             }
         }

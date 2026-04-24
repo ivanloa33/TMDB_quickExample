@@ -11,6 +11,7 @@ struct MovieCarouselSectionView: View {
     let imageLoader: ImageLoading
     let category: MovieCategory
     let data: [Movie]
+    let onMovieTap: (Int) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -18,7 +19,7 @@ struct MovieCarouselSectionView: View {
                 Text(category.title)
                     .font(.title3.weight(.semibold))
                 Spacer()
-                NavigationLink(value: category) {
+                NavigationLink(value: AppRoute.movieList(category: category)) {
                     Text("View All")
                 }
             }
@@ -26,11 +27,15 @@ struct MovieCarouselSectionView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 8) {
                     ForEach(data, id: \.id) { movie in
-                        MovieCarouselRowView(
-                            movie: movie,
-                            imageLoader: DefaultImageLoader(dataLoader: TMDBImageDataLoader())
-                        )
-                        .frame(width: 150)
+                        Button {
+                            onMovieTap(movie.id)
+                        } label: {
+                            MovieCarouselRowView(
+                                movie: movie,
+                                imageLoader: DefaultImageLoader(dataLoader: TMDBImageDataLoader())
+                            )
+                            .frame(width: 150)
+                        }
                     }
                 }
             }

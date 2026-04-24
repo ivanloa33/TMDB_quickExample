@@ -20,7 +20,10 @@ final class AppContainer {
         repository: repository
     )
     
-    func makeMovieListView(_ category: MovieCategory) -> some View {
+    func makeMovieListView(
+        _ category: MovieCategory,
+        onMovieTap: @escaping (Int) -> Void
+    ) -> some View {
         let viewModel = MoviesListViewModel(
             category: category,
             fetchMoviesUseCase: fetchMoviesUseCase
@@ -28,13 +31,23 @@ final class AppContainer {
         
         return MoviesListView(
             viewModel: viewModel,
-            imageLoader: imageLoader
+            imageLoader: imageLoader,
+            onMovieTap: onMovieTap
         )
     }
     
-    func makeHomeView() -> some View {
+    func makeMovieDetailView(from movieId: Int) -> some View {
+        let viewModel = MovieDetailViewModel(movieId: movieId)
+        
+        return MovieDetailView(viewModel: viewModel)
+    }
+    
+    func makeHomeView(onMovieTap: @escaping (Int) -> Void) -> some View {
         let viewModel = HomeViewModel(fetchMoviesUseCase: fetchMoviesUseCase)
         
-        return HomeView(viewModel: viewModel, imageLoader: imageLoader)
+        return HomeView(
+            viewModel: viewModel,
+            imageLoader: imageLoader,
+            onMovieTap: onMovieTap)
     }
 }

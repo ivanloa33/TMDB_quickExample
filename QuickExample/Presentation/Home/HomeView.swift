@@ -11,18 +11,20 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     private let imageLoader: ImageLoading
+    let onMovieTap: (Int) -> Void
     
-    init(viewModel: HomeViewModel, imageLoader: ImageLoading) {
+    init(viewModel: HomeViewModel, imageLoader: ImageLoading, onMovieTap: @escaping (Int) -> Void) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.imageLoader = imageLoader
+        self.onMovieTap = onMovieTap
     }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                MovieCarouselSectionView(imageLoader: imageLoader, category: .popular, data: viewModel.data(category: .popular))
-                MovieCarouselSectionView(imageLoader: imageLoader, category: .upcoming, data: viewModel.data(category: .upcoming))
-                MovieCarouselSectionView(imageLoader: imageLoader, category: .topRated, data: viewModel.data(category: .topRated))
+                makeMovieCarouselSectionView(with: .popular)
+                makeMovieCarouselSectionView(with: .upcoming)
+                makeMovieCarouselSectionView(with: .topRated)
             }
             .padding()
         }
@@ -30,5 +32,14 @@ struct HomeView: View {
         .task {
             await viewModel.fetchData()
         }
+    }
+    
+    private func makeMovieCarouselSectionView(with category: MovieCategory) -> some View {
+        MovieCarouselSectionView(
+            imageLoader: imageLoader,
+            category: category,
+            data: viewModel.data(category: category),
+            onMovieTap: onMovieTap
+        )
     }
 }
