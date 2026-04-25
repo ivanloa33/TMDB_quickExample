@@ -11,7 +11,6 @@ struct MovieDTO: Decodable {
     let id: Int
     let title: String
     let poster_path: String
-    let overview: String
     let releaseDate: String
     
     func toDomain() -> Movie {
@@ -19,7 +18,6 @@ struct MovieDTO: Decodable {
             id: id,
             title: title,
             posterPath: poster_path,
-            overview: overview,
             releaseDate: APIDateFormatter.yyyyMMdd.date(from: releaseDate) ?? Date()
         )
     }
@@ -29,14 +27,13 @@ struct MovieDTO: Decodable {
             id: id,
             title: title,
             poster_path: poster_path,
-            overview: overview,
             releaseDate: APIDateFormatter.yyyyMMdd.date(from: releaseDate) ?? Date(),
             cachedA: Date()
         )
     }
     
     enum CodingKeys: String, CodingKey {
-        case id,title, poster_path, overview
+        case id,title, poster_path
         case releaseDate = "release_date"
     }
 }

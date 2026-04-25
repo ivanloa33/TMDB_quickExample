@@ -11,7 +11,6 @@ struct CacheMovie {
     let id: Int
     let title: String
     let poster_path: String
-    let overview: String
     let releaseDate: Date
     let cachedA: Date
 }
@@ -22,7 +21,6 @@ extension CacheMovie {
             id: id,
             title: title,
             posterPath: poster_path,
-            overview: overview,
             releaseDate: releaseDate)
     }
 }
