@@ -32,11 +32,16 @@ final class MoviesRepositoryImpl: MoviesRepository {
         return responseMovieDTO.results.map { $0.toDomain() }
     }
     
+    func fetchMovieDetail(movieId: Int) async throws -> MovieDetail {
+        let movieDetailDTO: MovieDetailDTO = try await httpClient.get(endPoint: TMDBEndPoint.movieDetail(movieId))
+        return movieDetailDTO.toDomain()
+    }
+    
     private func endpoint(category: MovieCategory) -> TMDBEndPoint {
         switch category {
-        case .popular: return .popular
-        case .upcoming: return .upcoming
-        case .topRated: return .topRated
+        case .popular: return .popularMovies
+        case .upcoming: return .upcomingMovies
+        case .topRated: return .topRatedMovies
         }
     }
     

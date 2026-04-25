@@ -14,19 +14,23 @@ struct MovieDetailView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    
     var body: some View {
-        Text("Movie Detail View")
-        Text("Movie Id: \(viewModel.movieId)")
+        VStack {
+            Text("Movie Detail View")
+            Text("Movie Id: \(viewModel.movieId)")
+            
+            if let movieDetail = viewModel.movieDetail {
+                VStack {
+                    Text(movieDetail.title)
+                    Text(movieDetail.overview)
+                    Text("\(movieDetail.runtime)")
+                }
+                .padding()
+            }
+        }
+        .task {
+            await viewModel.fetchMovieDetail()
+        }
     }
 }
 
-import Combine
-
-final class MovieDetailViewModel: ObservableObject {
-    let movieId: Int
-    
-    init(movieId: Int) {
-        self.movieId = movieId
-    }
-}

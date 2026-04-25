@@ -9,18 +9,21 @@ import Foundation
 
 enum TMDBEndPoint: Endpoint {
     
-    case popular
-    case upcoming
-    case topRated
+    case popularMovies
+    case upcomingMovies
+    case topRatedMovies
+    case movieDetail(Int)
     
     var path: String {
         switch self {
-        case .popular:
+        case .popularMovies:
             return "movie/popular"
-        case .upcoming:
+        case .upcomingMovies:
             return "movie/upcoming"
-        case .topRated:
+        case .topRatedMovies:
             return "movie/top_rated"
+        case .movieDetail(let movieId):
+            return "movie/\(movieId)"
         }
     }
     

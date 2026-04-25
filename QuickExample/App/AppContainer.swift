@@ -19,6 +19,9 @@ final class AppContainer {
     private lazy var fetchMoviesUseCase: FetchMoviesUseCase = FetchMoviesUseCaseImpl(
         repository: repository
     )
+    private lazy var fetchMovieDetailUseCase: FetchMovieDetailUseCase = FetchMovieDetailUseCaseImpl(
+        repository: repository
+    )
     
     func makeMovieListView(
         _ category: MovieCategory,
@@ -37,7 +40,9 @@ final class AppContainer {
     }
     
     func makeMovieDetailView(from movieId: Int) -> some View {
-        let viewModel = MovieDetailViewModel(movieId: movieId)
+        let viewModel = MovieDetailViewModel(
+            movieId: movieId,
+            fetchMovieDetailUseCase: fetchMovieDetailUseCase)
         
         return MovieDetailView(viewModel: viewModel)
     }
