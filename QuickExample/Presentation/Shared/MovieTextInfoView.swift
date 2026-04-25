@@ -16,7 +16,7 @@ struct MovieTextInfoView: View {
                 .font(.headline)
                 .foregroundStyle(Color.primary)
                 .lineLimit(2)
-                .frame(height: 44, alignment: .topLeading)
+                .frame(height: 48, alignment: .topLeading)
             Text(movie.releaseDateText)
                 .font(.subheadline)
                 .foregroundStyle(Color.secondary)
