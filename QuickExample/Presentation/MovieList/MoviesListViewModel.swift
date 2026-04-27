@@ -10,9 +10,7 @@ import Combine
 
 @MainActor
 final class MoviesListViewModel: ObservableObject {
-    @Published private(set) var movies: [Movie] = []
-    @Published private(set) var isLoading: Bool = false
-    @Published private(set) var errorMessage: String? = nil
+    @Published private(set) var state: LoadableState<[Movie]> = .idle
     
     private let fetchMoviesUseCase: FetchMoviesUseCase
     private let category: MovieCategory
@@ -24,15 +22,24 @@ final class MoviesListViewModel: ObservableObject {
         self.navigationTitle = "\(category.title) Movies"
     }
     
-    func fetchMovies() async {
-        isLoading = true
-        errorMessage = nil
-        defer { isLoading = false }
-        
+    func loadIfNeeded() async {
+        guard case .idle = state else {
+            return
+        }
+        await load()
+    }
+    
+    func load() async {
+        await fetchMovies()
+    }
+    
+    private func fetchMovies() async {
+        state = .loading
         do {
-            movies = try await fetchMoviesUseCase.execute(category: category)
+            let movies = try await fetchMoviesUseCase.execute(category: category)
+            state = .loaded(movies)
         } catch {
-            errorMessage = "Failed to fetch movies: \(error.localizedDescription)"
+            state = .failed(error)
         }
     }
 }

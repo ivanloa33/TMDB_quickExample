@@ -23,27 +23,23 @@ struct MoviesListView: View {
     }
     
     var body: some View {
-        Group {
-            if viewModel.isLoading {
-                ProgressView("Data is loading ...")
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-            } else {
-                List(viewModel.movies, id: \.id) { movie in
-                    Button {
-                        onMovieTap(movie.id)
-                    } label: {
-                        MovieListRowView(movie: movie, imageLoader: imageLoader)
-                    }
+        LoadableView(state: viewModel.state, onRetry: {
+            await viewModel.load()
+        }) { content in
+            List(content, id: \.id) { movie in
+                Button {
+                    onMovieTap(movie.id)
+                } label: {
+                    MovieListRowView(movie: movie, imageLoader: imageLoader)
                 }
             }
         }
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
-            await viewModel.fetchMovies()
+            await viewModel.load()
         }
         .task {
-            await viewModel.fetchMovies()
+            await viewModel.loadIfNeeded()
         }
     }
 }

@@ -9,7 +9,7 @@ import Combine
 
 @MainActor
 final class HomeViewModel: ObservableObject {
-    @Published private(set) var moviesByCategory = [MovieCategory: [Movie]]()
+    @Published private(set) var state = LoadableState<[MovieCategory: [Movie]]>.idle
     
     let fetchMoviesUseCase: FetchMoviesUseCase
     
@@ -17,24 +17,49 @@ final class HomeViewModel: ObservableObject {
         self.fetchMoviesUseCase = fetchMoviesUseCase
     }
     
-    func fetchData() async {
-        async let popularMovies = fetchMovies(category: .popular)
-        async let upcomingMovies = fetchMovies(category: .upcoming)
-        async let topRatedMovies = fetchMovies(category: .topRated)
-        
-        await self.moviesByCategory[.popular] = popularMovies
-        await self.moviesByCategory[.upcoming] = upcomingMovies
-        await self.moviesByCategory[.topRated] = topRatedMovies
+    func loadIfNeeded() async {
+        guard case .idle = state else {
+            return
+        }
+        await load()
+    }
+    
+    func load() async {
+        await fetchData()
     }
     
     func data(category: MovieCategory) -> [Movie] {
+        guard case .loaded(let moviesByCategory) = state else {
+            return []
+        }
+        
         return Array((moviesByCategory[category] ?? []).prefix(5))
     }
     
-    private func fetchMovies(category: MovieCategory) async -> [Movie] {
-        guard let movies = try? await fetchMoviesUseCase.execute(category: category) else {
-            return []
+    private func fetchData() async {
+        do {
+            var moviesByCategory = [MovieCategory: [Movie]]()
+            state = .loading
+            
+            async let popularMovies = fetchMovies(category: .popular)
+            async let upcomingMovies = fetchMovies(category: .upcoming)
+            async let topRatedMovies = fetchMovies(category: .topRated)
+            
+            await moviesByCategory[.popular] = try popularMovies
+            await moviesByCategory[.upcoming] = try upcomingMovies
+            await moviesByCategory[.topRated] = try topRatedMovies
+            
+            state = .loaded(moviesByCategory)
+        } catch {
+            state = .failed(error)
         }
-        return movies
+    }
+    
+    private func fetchMovies(category: MovieCategory) async throws -> [Movie] {
+        do {
+            return try await fetchMoviesUseCase.execute(category: category)
+        } catch {
+            throw error
+        }
     }
 }

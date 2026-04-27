@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: handle states with loading, loaded, and failed with a default Image
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     private let imageLoader: ImageLoading
@@ -20,6 +19,17 @@ struct HomeView: View {
     }
     
     var body: some View {
+        LoadableView(state: viewModel.state, onRetry: {
+            await viewModel.load()
+        }) { _ in
+            contentView
+        }
+        .task {
+            await viewModel.loadIfNeeded()
+        }
+    }
+    
+    private var contentView: some View {
         ScrollView {
             VStack(spacing: 20) {
                 makeMovieCarouselSectionView(with: .popular)
@@ -29,9 +39,6 @@ struct HomeView: View {
             .padding()
         }
         .background(Color(.systemGroupedBackground))
-        .task {
-            await viewModel.fetchData()
-        }
     }
     
     private func makeMovieCarouselSectionView(with category: MovieCategory) -> some View {
