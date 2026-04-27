@@ -9,7 +9,7 @@ import Combine
 
 final class MovieDetailViewModel: ObservableObject {
     
-    @Published private(set) var movieDetail: MovieDetail?
+    @Published private(set) var state: LoadableState<MovieDetail> = .idle
     
     let movieId: Int
     let fetchMovieDetailUseCase: FetchMovieDetailUseCase
@@ -19,9 +19,25 @@ final class MovieDetailViewModel: ObservableObject {
         self.fetchMovieDetailUseCase = fetchMovieDetailUseCase
     }
     
-    func fetchMovieDetail() async {
-        let movieDetail = try? await fetchMovieDetailUseCase.execute(movieId: movieId)
-        self.movieDetail = movieDetail
+    func loadIfNeeded() async {
+        guard case .idle = state else {
+            return
+        }
+        await load()
+    }
+    
+    func load() async {
+        await fetchMovieDetail()
+    }
+    
+    private func fetchMovieDetail() async {
+        do {
+            state = .loading
+            let movieDetail = try await fetchMovieDetailUseCase.execute(movieId: movieId)
+            state = .loaded(movieDetail)
+        } catch {
+            state = .failed(error)
+        }
     }
 }
 

@@ -15,21 +15,19 @@ struct MovieDetailView: View {
     }
     
     var body: some View {
-        VStack {
-            Text("Movie Detail View")
-            Text("Movie Id: \(viewModel.movieId)")
-            
-            if let movieDetail = viewModel.movieDetail {
-                VStack {
-                    Text(movieDetail.title)
-                    Text(movieDetail.overview)
-                    Text("\(movieDetail.runtime)")
-                }
-                .padding()
+        LoadableView(state: viewModel.state) {
+            await viewModel.load()
+        } content: { movieDetail in
+            VStack {
+                Text("Movie Detail View")
+                Text(movieDetail.title)
+                Text(movieDetail.overview)
+                Text("\(movieDetail.runtime)")
             }
+            .padding()
         }
         .task {
-            await viewModel.fetchMovieDetail()
+            await viewModel.loadIfNeeded()
         }
     }
 }
