@@ -34,7 +34,7 @@ struct MovieCarouselSectionView: View {
                         } label: {
                             MovieCarouselRowView(
                                 movie: movie,
-                                imageLoader: DefaultImageLoader(dataLoader: TMDBImageDataLoader())
+                                imageLoader: imageLoader
                             )
                             .frame(width: 150)
                         }
