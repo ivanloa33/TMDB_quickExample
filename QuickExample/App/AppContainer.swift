@@ -44,7 +44,7 @@ final class AppContainer {
             movieId: movieId,
             fetchMovieDetailUseCase: fetchMovieDetailUseCase)
         
-        return MovieDetailView(viewModel: viewModel)
+        return MovieDetailView(viewModel: viewModel, imageLoader: imageLoader)
     }
     
     func makeHomeView(onMovieTap: @escaping (Int) -> Void) -> some View {

@@ -15,14 +15,16 @@ struct MovieCarouselSectionView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(category.title)
-                    .font(.title3.weight(.semibold))
-                Spacer()
-                NavigationLink(value: AppRoute.movieList(category: category)) {
-                    Text("View All")
+            NavigationLink(value: AppRoute.movieList(category: category)) {
+                HStack {
+                    Text(category.title)
+                        .font(.title.weight(.semibold))
+                    Image(systemName: "chevron.right")
+                        .font(.headline.weight(.semibold))
+                        .foregroundStyle(.secondary)
                 }
             }
+            .buttonStyle(.plain)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 8) {
@@ -40,9 +42,8 @@ struct MovieCarouselSectionView: View {
                 }
             }
         }
-        .padding()
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
+        //.clipShape(RoundedRectangle(cornerRadius: 16))
+        //.shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
     }
 }

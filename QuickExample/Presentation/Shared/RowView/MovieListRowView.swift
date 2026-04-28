@@ -17,6 +17,8 @@ struct MovieListRowView: View {
                 posterPath: movie.posterPath,
                 imageLoader: imageLoader
             )
+            .frame(width: 120, height: 180)
+            .clipped()
             MovieTextInfoView(movie: movie)
             Spacer()
         }

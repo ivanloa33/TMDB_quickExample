@@ -26,12 +26,17 @@ struct MoviesListView: View {
         LoadableView(state: viewModel.state, onRetry: {
             await viewModel.load()
         }) { content in
-            List(content, id: \.id) { movie in
-                Button {
-                    onMovieTap(movie.id)
-                } label: {
-                    MovieListRowView(movie: movie, imageLoader: imageLoader)
+            ScrollView {
+                LazyVStack {
+                    ForEach(content, id: \.id) { movie in
+                        Button {
+                            onMovieTap(movie.id)
+                        } label: {
+                            MovieListRowView(movie: movie, imageLoader: imageLoader)
+                        }
+                    }
                 }
+                .padding()
             }
         }
         .navigationTitle(viewModel.navigationTitle)

@@ -14,4 +14,11 @@ enum DisplayDateFormatter {
         formatter.locale = Locale(identifier: "en_US")
         return formatter
     }()
+    
+    static let year: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        
+        return formatter
+    }()
 }

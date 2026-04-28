@@ -25,8 +25,6 @@ struct MoviePosterView: View {
                 ProgressView()
             }
         }
-        .frame(width: 120, height: 180)
-        .clipped()
         .task(id: posterPath) {
             await loadImage()
         }
