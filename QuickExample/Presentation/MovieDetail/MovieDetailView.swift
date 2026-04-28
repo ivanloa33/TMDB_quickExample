@@ -42,7 +42,7 @@ struct MovieDetailView: View {
                 posterPath: viewModel.movieDetail?.backdropPath ?? String(),
                 imageLoader: imageLoader
             )
-            .opacity(0.8)
+            .opacity(0.6)
             .scaledToFill()
             
             heroContent

@@ -42,8 +42,6 @@ struct MovieCarouselSectionView: View {
                 }
             }
         }
-        .background(Color(.systemBackground))
-        //.clipShape(RoundedRectangle(cornerRadius: 16))
-        //.shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
+        .background(Color.clear)
     }
 }
