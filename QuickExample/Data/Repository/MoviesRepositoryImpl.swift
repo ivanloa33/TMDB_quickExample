@@ -11,11 +11,14 @@ final class MoviesRepositoryImpl: MoviesRepository {
     
     private let httpClient: HTTPClient
     private let cache: any Cache<CacheKey, [CacheMovie]>
+    private let cacheMovieDetail: any Cache<Int, CacheMovieDetail>
     
     init(httpClient: HTTPClient,
-         cache: any Cache<CacheKey, [CacheMovie]>) {
+         cache: any Cache<CacheKey, [CacheMovie]>,
+         cacheMovieDetail: any Cache<Int, CacheMovieDetail>) {
         self.httpClient = httpClient
         self.cache = cache
+        self.cacheMovieDetail = cacheMovieDetail
     }
     
     func fetchMovies(category: MovieCategory) async throws -> [Movie] {
@@ -33,7 +36,14 @@ final class MoviesRepositoryImpl: MoviesRepository {
     }
     
     func fetchMovieDetail(movieId: Int) async throws -> MovieDetail {
+        if let movieDetail = await cacheMovieDetail.get(key: movieId) {
+            return movieDetail.toDomain()
+        }
+        
         let movieDetailDTO: MovieDetailDTO = try await httpClient.get(endPoint: TMDBEndPoint.movieDetail(movieId))
+        
+        await cacheMovieDetail.set(movieDetailDTO.toCache(), for: movieId)
+        
         return movieDetailDTO.toDomain()
     }
     

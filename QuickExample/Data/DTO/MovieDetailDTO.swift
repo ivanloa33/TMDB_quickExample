@@ -37,6 +37,11 @@ struct MovieDetailDTO: Decodable {
             voteAverage: vote_average
         )
     }
+    
+    func toCache() -> CacheMovieDetail {
+        CacheMovieDetail(movieDetail: self)
+    }
+    
 }
 
 struct GenreDTO: Decodable {

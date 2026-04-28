@@ -10,9 +10,11 @@ import SwiftUI
 final class AppContainer {
     private lazy var httpClient: HTTPClient = URLSessionHTTPClient()
     private lazy var cache: any Cache<CacheKey, [CacheMovie]> = InMemoryCache()
+    private lazy var cacheMovieDetail: any Cache<Int, CacheMovieDetail> = InMemoryCache()
     private lazy var repository: MoviesRepository = MoviesRepositoryImpl(
         httpClient: httpClient,
-        cache: cache
+        cache: cache,
+        cacheMovieDetail: cacheMovieDetail
     )
     private lazy var imageDataLoader: ImageDataLoading = TMDBImageDataLoader()
     private lazy var imageLoader: ImageLoading = DefaultImageLoader(dataLoader: imageDataLoader)
