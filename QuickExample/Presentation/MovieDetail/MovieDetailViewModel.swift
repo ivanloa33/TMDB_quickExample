@@ -50,18 +50,18 @@ final class MovieDetailViewModel: ObservableObject {
     
     var metadataText: String {
         guard case .loaded(let movieDetail) = state else { return "" }
-
-            let year = DisplayDateFormatter.year.string(from: movieDetail.releaseDate)
-            let runtime = "\(movieDetail.runtime) min"
-            let rating = String(format: "%.1f ★", movieDetail.voteAverage)
-
-            return [year, runtime, rating]
-                .joined(separator: " • ")
-        }
-
-        var genreText: String {
-            guard case .loaded(let movieDetail) = state else { return "" }
-            return movieDetail.genres.map(\.name).joined(separator: ", ")
-        }
+        
+        let year = DisplayDateFormatter.year.string(from: movieDetail.releaseDate)
+        let runtime = "\(movieDetail.runtime) min"
+        let rating = String(format: "%.1f ★", movieDetail.voteAverage)
+        
+        return [year, runtime, rating]
+            .joined(separator: " • ")
+    }
+    
+    var genreText: String {
+        guard case .loaded(let movieDetail) = state else { return "" }
+        return movieDetail.genres.map(\.name).joined(separator: ", ")
+    }
 }
 
