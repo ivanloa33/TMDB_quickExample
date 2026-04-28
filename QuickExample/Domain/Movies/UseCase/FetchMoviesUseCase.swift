@@ -14,13 +14,22 @@ protocol FetchMoviesUseCase {
 final class FetchMoviesUseCaseImpl: FetchMoviesUseCase {
     
     private let repository: MoviesRepository
+    private let releaseDatePolicy: MovieReleaseDatePolicy
     
-    init(repository: MoviesRepository) {
+    init(repository: MoviesRepository, releaseDatePolicy: MovieReleaseDatePolicy = .init(dateWindowPolicy: .init(pastMonths: 3))) {
         self.repository = repository
+        self.releaseDatePolicy = releaseDatePolicy
     }
     
     func execute(category: MovieCategory) async throws -> [Movie] {
-        try await repository.fetchMovies(category: category)
+        let movies = try await repository.fetchMovies(category: category)
+        
+        switch category {
+        case .upcoming:
+            return releaseDatePolicy.filter(movies)
+        case .popular, .topRated:
+            return movies
+        }
     }
 }
 
