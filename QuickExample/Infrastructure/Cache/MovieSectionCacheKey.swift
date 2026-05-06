@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CacheKey {
+enum MovieSectionCacheKey {
     case popular
     case upcoming
     case topRated

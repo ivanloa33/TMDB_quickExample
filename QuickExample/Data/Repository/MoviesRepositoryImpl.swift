@@ -10,11 +10,11 @@ import Foundation
 final class MoviesRepositoryImpl: MoviesRepository {
     
     private let httpClient: HTTPClient
-    private let cache: any Cache<CacheKey, [CacheMovie]>
+    private let cache: any Cache<MovieSectionCacheKey, [CacheMovie]>
     private let cacheMovieDetail: any Cache<Int, CacheMovieDetail>
     
     init(httpClient: HTTPClient,
-         cache: any Cache<CacheKey, [CacheMovie]>,
+         cache: any Cache<MovieSectionCacheKey, [CacheMovie]>,
          cacheMovieDetail: any Cache<Int, CacheMovieDetail>) {
         self.httpClient = httpClient
         self.cache = cache
@@ -55,7 +55,7 @@ final class MoviesRepositoryImpl: MoviesRepository {
         }
     }
     
-    private func cacheKey(category: MovieCategory) -> CacheKey {
+    private func cacheKey(category: MovieCategory) -> MovieSectionCacheKey {
         switch category {
         case .popular: return .popular
         case .upcoming: return .upcoming

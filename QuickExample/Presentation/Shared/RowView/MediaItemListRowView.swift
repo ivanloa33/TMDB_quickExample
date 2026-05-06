@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct MovieListRowView: View {
-    let movie: Movie
+struct MediaItemListRowView: View {
+    let mediaItem: MediaItem
     let imageLoader: ImageLoading
     
     var body: some View {
         HStack {
             MoviePosterView(
-                posterPath: movie.posterPath,
+                posterPath: mediaItem.posterPath,
                 imageLoader: imageLoader
             )
             .frame(width: 120, height: 180)
             .clipped()
-            MovieTextInfoView(movie: movie)
+            MediaItemTextInfoView(mediaItem: mediaItem)
             Spacer()
         }
     }

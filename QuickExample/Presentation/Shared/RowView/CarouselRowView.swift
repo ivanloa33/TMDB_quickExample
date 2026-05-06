@@ -1,5 +1,5 @@
 //
-//  MovieCarouselRowView.swift
+//  CarouselRowView.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 22/04/26.
@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct MovieCarouselRowView: View {
-    let movie: Movie
+struct CarouselRowView: View {
+    let mediaItem: MediaItem
     let imageLoader: ImageLoading
     
     var body: some View {
         VStack {
             MoviePosterView(
-                posterPath: movie.posterPath,
+                posterPath: mediaItem.posterPath,
                 imageLoader: imageLoader
             )
             .frame(width: 120, height: 180)
             .clipped()
-            MovieTextInfoView(movie: movie)
+            MediaItemTextInfoView(mediaItem: mediaItem)
         }
         .padding(.vertical)
     }

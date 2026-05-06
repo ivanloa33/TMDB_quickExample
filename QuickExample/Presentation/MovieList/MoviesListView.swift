@@ -32,7 +32,7 @@ struct MoviesListView: View {
                         Button {
                             onMovieTap(movie.id)
                         } label: {
-                            MovieListRowView(movie: movie, imageLoader: imageLoader)
+                            MediaItemListRowView(mediaItem: movie, imageLoader: imageLoader)
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 //
-//  MovieCarouselSectionView.swift
+//  CarouselSectionView.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 22/04/26.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct MovieCarouselSectionView: View {
+struct CarouselSectionView: View {
     let imageLoader: ImageLoading
-    let category: MovieCategory
-    let data: [Movie]
-    let onMovieTap: (Int) -> Void
+    let category: (rawValue: String, title: String)
+    let data: [MediaItem]
+    let onMediaItemTap: (Int) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            NavigationLink(value: AppRoute.movieList(category: category)) {
+            NavigationLink(value: AppRoute.movieList(category: category.rawValue)) {
                 HStack {
                     Text(category.title)
                         .font(.title.weight(.semibold))
@@ -28,12 +28,12 @@ struct MovieCarouselSectionView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 8) {
-                    ForEach(data, id: \.id) { movie in
+                    ForEach(data, id: \.id) { item in
                         Button {
-                            onMovieTap(movie.id)
+                            onMediaItemTap(item.id)
                         } label: {
-                            MovieCarouselRowView(
-                                movie: movie,
+                            CarouselRowView(
+                                mediaItem: item,
                                 imageLoader: imageLoader
                             )
                             .frame(width: 150)

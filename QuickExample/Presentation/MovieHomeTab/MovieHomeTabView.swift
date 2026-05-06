@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  MovieHomeTabView.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 21/04/26.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @StateObject private var viewModel: HomeViewModel
+struct MovieHomeTabView: View {
+    @StateObject private var viewModel: MovieHomeTabViewModel
     private let imageLoader: ImageLoading
     let onMovieTap: (Int) -> Void
     
-    init(viewModel: HomeViewModel, imageLoader: ImageLoading, onMovieTap: @escaping (Int) -> Void) {
+    init(viewModel: MovieHomeTabViewModel, imageLoader: ImageLoading, onMovieTap: @escaping (Int) -> Void) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.imageLoader = imageLoader
         self.onMovieTap = onMovieTap
@@ -42,11 +42,11 @@ struct HomeView: View {
     }
     
     private func makeMovieCarouselSectionView(with category: MovieCategory) -> some View {
-        MovieCarouselSectionView(
+        CarouselSectionView(
             imageLoader: imageLoader,
-            category: category,
+            category: (rawValue: category.rawValue, title: category.title),
             data: viewModel.data(category: category),
-            onMovieTap: onMovieTap
+            onMediaItemTap: onMovieTap
         )
     }
 }

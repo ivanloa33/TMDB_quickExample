@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MovieCategory: Hashable {
+enum MovieCategory: String, Hashable {
     case popular
     case upcoming
     case topRated

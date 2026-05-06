@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  MovieHomeTabViewModel.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 22/04/26.
@@ -8,7 +8,7 @@
 import Combine
 
 @MainActor
-final class HomeViewModel: ObservableObject {
+final class MovieHomeTabViewModel: ObservableObject {
     @Published private(set) var state = LoadableState<[MovieCategory: [Movie]]>.idle
     
     let fetchMoviesUseCase: FetchMoviesUseCase

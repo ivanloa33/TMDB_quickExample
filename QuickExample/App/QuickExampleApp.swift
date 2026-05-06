@@ -13,7 +13,8 @@ struct QuickExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView(container: container)
+            RootTabView()
+                .environment(\.container, container)
         }
     }
 }

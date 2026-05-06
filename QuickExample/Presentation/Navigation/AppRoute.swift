@@ -8,5 +8,5 @@
 import Foundation
 
 enum AppRoute: Hashable {
-    case movieList(category: MovieCategory)
+    case movieList(category: String)
 }

@@ -7,8 +7,12 @@
 
 import Foundation
 
-extension Movie {
+extension Movie: MediaItem {
     var releaseDateText: String {
         DisplayDateFormatter.medium.string(from: releaseDate)
+    }
+    
+    var titleText: String {
+        title
     }
 }

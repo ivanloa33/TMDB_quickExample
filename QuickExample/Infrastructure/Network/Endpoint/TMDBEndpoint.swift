@@ -13,6 +13,9 @@ enum TMDBEndPoint: Endpoint {
     case upcomingMovies
     case topRatedMovies
     case movieDetail(Int)
+    case onTheAirTVShows
+    case popularTVShows
+    case topRatedTVShows
     
     var path: String {
         switch self {
@@ -24,6 +27,12 @@ enum TMDBEndPoint: Endpoint {
             return "movie/top_rated"
         case .movieDetail(let movieId):
             return "movie/\(movieId)"
+        case .onTheAirTVShows:
+            return "tv/on_the_air"
+        case .popularTVShows:
+            return "tv/popular"
+        case .topRatedTVShows:
+            return "tv/top_rated"
         }
     }
     
