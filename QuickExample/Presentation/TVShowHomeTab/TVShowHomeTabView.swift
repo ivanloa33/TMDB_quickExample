@@ -38,7 +38,7 @@ struct TVShowHomeTabView: View {
             }
             .padding()
         }
-        .background(Color(.systemBackground))
+        .background(Color(.systemGroupedBackground))
     }
     
     private func makeTVShowCarouselSectionView(with category: TVShowCategory) -> some View {
