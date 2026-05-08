@@ -21,3 +21,9 @@ Sheet
       <td><img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-05-07 at 12 20 07" src="https://github.com/user-attachments/assets/acd3242a-f5c3-4139-a1cd-4ebc06cb88f3" /></td>
     </tr>
   </tbody>
+
+To make this project work you will need to add your APIKEY like: 
+
+enum Secrets {
+    nonisolated static let tmdbApiKey = "your_api_key
+}
