@@ -10,11 +10,17 @@ import SwiftUI
 struct MovieHomeTabView: View {
     @StateObject private var viewModel: MovieHomeTabViewModel
     private let imageLoader: ImageLoading
+    let onCategoryTap: (String) -> Void
     let onMovieTap: (Int) -> Void
     
-    init(viewModel: MovieHomeTabViewModel, imageLoader: ImageLoading, onMovieTap: @escaping (Int) -> Void) {
+    init(viewModel: MovieHomeTabViewModel,
+         imageLoader: ImageLoading,
+         onCategoryTap: @escaping (String) -> Void,
+         onMovieTap: @escaping (Int) -> Void
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.imageLoader = imageLoader
+        self.onCategoryTap = onCategoryTap
         self.onMovieTap = onMovieTap
     }
     
@@ -46,6 +52,7 @@ struct MovieHomeTabView: View {
             imageLoader: imageLoader,
             category: (rawValue: category.rawValue, title: category.title),
             data: viewModel.data(category: category),
+            onCategoryTap: onCategoryTap,
             onMediaItemTap: onMovieTap
         )
     }

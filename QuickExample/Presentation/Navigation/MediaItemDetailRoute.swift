@@ -1,5 +1,5 @@
 //
-//  MovieDetailRoute.swift
+//  MediaItemDetailRoute.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 24/04/26.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MovieDetailRoute: Identifiable {
+struct MediaItemDetailRoute: Identifiable {
     let id: Int
 }

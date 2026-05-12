@@ -1,0 +1,12 @@
+//
+//  MovieRoute.swift
+//  QuickExample
+//
+//  Created by Ivan Lopez on 24/04/26.
+//
+
+import Foundation
+
+enum MovieRoute: Hashable {
+    case movieList(category: MovieCategory)
+}

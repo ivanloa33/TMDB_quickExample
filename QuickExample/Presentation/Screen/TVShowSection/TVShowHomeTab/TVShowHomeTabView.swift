@@ -10,11 +10,18 @@ import SwiftUI
 struct TVShowHomeTabView: View {
     @StateObject private var viewModel: TVShowHomeTabViewModel
     private let imageLoader: ImageLoading
+    let onCategoryTap: (String) -> Void
     let onTVShowTap: (Int) -> Void
     
-    init(viewModel: TVShowHomeTabViewModel, imageLoader: ImageLoading, onTVShowTap: @escaping (Int) -> Void) {
+    init(
+        viewModel: TVShowHomeTabViewModel,
+        imageLoader: ImageLoading,
+        onCategoryTap: @escaping (String) -> Void,
+        onTVShowTap: @escaping (Int) -> Void
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.imageLoader = imageLoader
+        self.onCategoryTap = onCategoryTap
         self.onTVShowTap = onTVShowTap
     }
     
@@ -46,6 +53,7 @@ struct TVShowHomeTabView: View {
             imageLoader: imageLoader,
             category: (rawValue: category.rawValue, title: category.title),
             data: viewModel.data(category: category),
+            onCategoryTap: onCategoryTap,
             onMediaItemTap: onTVShowTap
         )
     }

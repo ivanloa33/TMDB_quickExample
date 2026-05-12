@@ -11,11 +11,14 @@ struct CarouselSectionView: View {
     let imageLoader: ImageLoading
     let category: (rawValue: String, title: String)
     let data: [MediaItem]
+    let onCategoryTap: (String) -> Void
     let onMediaItemTap: (Int) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            NavigationLink(value: AppRoute.movieList(category: category.rawValue)) {
+            Button {
+                onCategoryTap(category.rawValue)
+            } label: {
                 HStack {
                     Text(category.title)
                         .font(.title.weight(.semibold))

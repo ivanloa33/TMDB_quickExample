@@ -23,11 +23,30 @@ final class TVShowsContainer {
         self.fetchTVShowsUseCase = FetchTVShowsUseCaseImpl(repository: repository)
     }
     
-    func makeHomeView(onTVShowTap: @escaping (Int) -> Void) -> some View {
+    func makeTVShowListView(
+        _ category: TVShowCategory,
+        onTVShowTap: @escaping (Int) -> Void
+    ) -> some View {
+        let viewModel = TVShowListViewModel(
+            category: category,
+            fetchTVShowsUseCase: fetchTVShowsUseCase
+        )
+        return TVShowListView(
+            viewModel: viewModel,
+            imageLoader: core.imageLoader,
+            onTVShowTap: onTVShowTap
+        )
+    }
+    
+    func makeTVShowHomeView(
+        onCategoryTap: @escaping (String) -> Void,
+        onTVShowTap: @escaping (Int) -> Void
+    ) -> some View {
         let viewModel = TVShowHomeTabViewModel(fetchTVShowUseCase: fetchTVShowsUseCase)
         return TVShowHomeTabView(
             viewModel: viewModel,
             imageLoader: core.imageLoader,
+            onCategoryTap: onCategoryTap,
             onTVShowTap: onTVShowTap
         )
     }

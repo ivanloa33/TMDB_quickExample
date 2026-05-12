@@ -63,12 +63,16 @@ extension MoviesContainer {
         return MovieDetailView(viewModel: viewModel, imageLoader: core.imageLoader)
     }
     
-    func makeHomeView(onMovieTap: @escaping (Int) -> Void) -> some View {
+    func makeMovieHomeView(
+        onCategoryTap: @escaping (String) -> Void,
+        onMovieTap: @escaping (Int) -> Void
+    ) -> some View {
         let viewModel = MovieHomeTabViewModel(fetchMoviesUseCase: fetchMoviesUseCase)
         
         return MovieHomeTabView(
             viewModel: viewModel,
             imageLoader: core.imageLoader,
+            onCategoryTap: onCategoryTap,
             onMovieTap: onMovieTap)
     }
 }
