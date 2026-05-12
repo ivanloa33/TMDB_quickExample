@@ -32,7 +32,7 @@ struct TVShowListView: View {
                         Button {
                             onTVShowTap(tvShow.id)
                         } label: {
-                            MediaItemListRowView(mediaItem: tvShow, imageLoader: imageLoader)
+                            ListRowView(mediaItem: tvShow, imageLoader: imageLoader)
                         }
                     }
                 }

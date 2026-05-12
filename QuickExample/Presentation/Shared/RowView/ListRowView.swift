@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MediaItemListRowView: View {
+struct ListRowView: View {
     let mediaItem: MediaItem
     let imageLoader: ImageLoading
     
