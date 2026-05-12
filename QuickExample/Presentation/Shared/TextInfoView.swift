@@ -1,5 +1,5 @@
 //
-//  MediaItemTextInfoView.swift
+//  TextInfoView.swift
 //  QuickExample
 //
 //  Created by Ivan Lopez on 22/04/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MediaItemTextInfoView: View {
+struct TextInfoView: View {
     let mediaItem: MediaItem
     
     var body: some View {

@@ -19,7 +19,7 @@ struct ListRowView: View {
             )
             .frame(width: 120, height: 180)
             .clipped()
-            MediaItemTextInfoView(mediaItem: mediaItem)
+            TextInfoView(mediaItem: mediaItem)
             Spacer()
         }
     }
